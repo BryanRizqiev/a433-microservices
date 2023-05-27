@@ -1,0 +1,106 @@
+ Network a433-microservices_default  Creating
+ Network a433-microservices_default  Created
+ Container item-db  Creating
+ Container item-db  Created
+ Container item-app  Creating
+ Container item-app  Created
+Attaching to item-app, item-db
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] MongoDB starting : pid=1 port=27017 dbpath=/data/db 64-bit host=3805b1f62ade
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] db version v3.6.23
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] git version: d352e6a4764659e0d0350ce77279de3c1f243e5c
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2g  1 Mar 2016
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] modules: none
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] build environment:
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten]     distmod: ubuntu1604
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten]     distarch: x86_64
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+item-db   | 2023-05-27T03:22:36.288+0000 I CONTROL  [initandlisten] options: { net: { bindIpAll: true } }
+item-db   | 2023-05-27T03:22:36.289+0000 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+item-db   | 2023-05-27T03:22:36.289+0000 I STORAGE  [initandlisten] 
+item-db   | 2023-05-27T03:22:36.289+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+item-db   | 2023-05-27T03:22:36.289+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+item-db   | 2023-05-27T03:22:36.289+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=688M,cache_overflow=(file_max=0M),session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+item-app  | 
+item-app  | > docker-software-delivery@1.0.0 start /app
+item-app  | > node ./bin/www
+item-app  | 
+item-db   | 2023-05-27T03:22:37.797+0000 I STORAGE  [initandlisten] WiredTiger message [1685157757:797279][1:0x7fea32a56a40], txn-recover: Main recovery loop: starting at 1/26624
+item-db   | 2023-05-27T03:22:37.923+0000 I STORAGE  [initandlisten] WiredTiger message [1685157757:923137][1:0x7fea32a56a40], txn-recover: Recovering log 1 through 2
+item-db   | 2023-05-27T03:22:38.020+0000 I STORAGE  [initandlisten] WiredTiger message [1685157758:20781][1:0x7fea32a56a40], txn-recover: Recovering log 2 through 2
+item-app  | NODE_ENV: production
+item-db   | 2023-05-27T03:22:38.080+0000 I STORAGE  [initandlisten] WiredTiger message [1685157758:80323][1:0x7fea32a56a40], txn-recover: Set global recovery timestamp: 0
+item-app  | /app/node_modules/mongodb/lib/mongo_client.js:421
+item-app  |           throw err
+item-app  |           ^
+item-app  | 
+item-app  | AssertionError [ERR_ASSERTION]: null == Error [MongoError]: failed to connect to server [item-db:27017] on first connect [Error: connect ECONNREFUSED 172.20.0.2:27017
+item-app  |     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1159:16) {
+item-app  |   name: 'MongoError'
+item-app  | }]
+item-app  |     at Pool.<anonymous> (/app/node_modules/mongodb-core/lib/topologies/server.js:336:35)
+item-app  |     at Pool.emit (events.js:400:28)
+item-app  |     at Connection.<anonymous> (/app/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+item-app  |     at Object.onceWrapper (events.js:520:26)
+item-app  |     at Connection.emit (e...
+item-app  |     at /app/app.js:24:10
+item-app  |     at connectCallback (/app/node_modules/mongodb/lib/mongo_client.js:527:5)
+item-app  |     at /app/node_modules/mongodb/lib/mongo_client.js:418:11
+item-app  |     at processTicksAndRejections (internal/process/task_queues.js:77:11) {
+item-app  |   generatedMessage: true,
+item-app  |   code: 'ERR_ASSERTION',
+item-app  |   actual: null,
+item-app  |   expected: Error [MongoError]: failed to connect to server [item-db:27017] on first connect [Error: connect ECONNREFUSED 172.20.0.2:27017
+item-app  |       at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1159:16) {
+item-app  |     name: 'MongoError'
+item-app  |   }]
+item-app  |       at Pool.<anonymous> (/app/node_modules/mongodb-core/lib/topologies/server.js:336:35)
+item-app  |       at Pool.emit (events.js:400:28)
+item-app  |       at Connection.<anonymous> (/app/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+item-app  |       at Object.onceWrapper (events.js:520:26)
+item-app  |       at Connection.emit (events.js:400:28)
+item-app  |       at Socket.<anonymous> (/app/node_modules/mongodb-core/lib/connection/connection.js:189:49)
+item-app  |       at Object.onceWrapper (events.js:520:26)
+item-app  |       at Socket.emit (events.js:400:28)
+item-app  |       at emitErrorNT (internal/streams/destroy.js:106:8)
+item-app  |       at emitErrorCloseNT (internal/streams/destroy.js:74:3),
+item-app  |   operator: '=='
+item-app  | }
+item-app  | npm ERR! code ELIFECYCLE
+item-app  | npm ERR! errno 1
+item-app  | npm ERR! docker-software-delivery@1.0.0 start: `node ./bin/www`
+item-app  | npm ERR! Exit status 1
+item-app  | npm ERR! 
+item-app  | npm ERR! Failed at the docker-software-delivery@1.0.0 start script.
+item-app  | npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+item-app  | 
+item-app  | npm ERR! A complete log of this run can be found in:
+item-app  | npm ERR!     /root/.npm/_logs/2023-05-27T03_22_38_114Z-debug.log
+item-db   | 2023-05-27T03:22:38.158+0000 I CONTROL  [initandlisten] 
+item-db   | 2023-05-27T03:22:38.159+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+item-db   | 2023-05-27T03:22:38.159+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+item-db   | 2023-05-27T03:22:38.159+0000 I CONTROL  [initandlisten] 
+item-db   | 2023-05-27T03:22:38.165+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+item-db   | 2023-05-27T03:22:38.166+0000 I NETWORK  [initandlisten] listening via socket bound to 0.0.0.0
+item-db   | 2023-05-27T03:22:38.166+0000 I NETWORK  [initandlisten] listening via socket bound to /tmp/mongodb-27017.sock
+item-db   | 2023-05-27T03:22:38.166+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+item-app exited with code 1
+item-app  | 
+item-app  | > docker-software-delivery@1.0.0 start /app
+item-app  | > node ./bin/www
+item-app  | 
+item-app  | NODE_ENV: production
+item-db   | 2023-05-27T03:22:39.452+0000 I NETWORK  [listener] connection accepted from 172.20.0.3:35740 #1 (1 connection now open)
+item-db   | 2023-05-27T03:22:39.458+0000 I NETWORK  [conn1] received client metadata from 172.20.0.3:35740 conn1: { driver: { name: "nodejs", version: "2.2.36" }, os: { type: "Linux", name: "linux", architecture: "x64", version: "5.15.49-linuxkit" }, platform: "Node.js v14.21.3, LE, mongodb-core: 2.1.20" }
+item-app  | Connected to database
+item-app  | [0mGET / [32m200 [0m210.973 ms - 785[0m
+item-app  | [0mGET /javascripts/dist/dist.min.js [36m304 [0m2.428 ms - -[0m
+item-app  | [0mGET /stylesheets/style.css [32m200 [0m39.136 ms - 519[0m
+item-app  | [0mGET /api [32m200 [0m14.477 ms - 58[0m
+Gracefully stopping... (press Ctrl+C again to force)
+Aborting on container exit...
+ Container item-app  Stopping
+ Container item-app  Stopped
+ Container item-db  Stopping
+ Container item-db  Stopped
+canceled

@@ -1,0 +1,38 @@
+# Versi dokumen docker compose
+version: "3.8"
+
+# Mendefinisikan berbagai service yang akan dibuat
+services:
+  # Service item-app
+  item-app:
+    # Image dari service yang akan dibuat
+    image: item-app:v1
+    # Nama service yang akan dibuat
+    container_name: item-app
+    # Meneruskan port 80 host ke 8080 container
+    ports:
+      - "80:8080"
+    # Menunggu service item-db aktif dahulu
+    depends_on:
+      - item-db
+    # Restart policy, always berarti container akan restart ketika container berhenti
+    restart: always
+
+  # Service item-app
+  item-db:
+  # Image dari service yang akan dibuat
+    image: mongo:3
+    # Nama service yang akan dibuat
+    container_name: item-db
+    # Melampirkan volume app-db ke path /data/db di dalam container
+    volumes:
+      - app-db:/data/db 
+    # Restart policy, always berarti container akan restart ketika container berhenti
+    restart: always
+
+# Mendefinisikan berbagai volume yang akan dibuat
+volumes:
+  # Volume app-db
+  app-db:
+    # Nama volume yang akan dibuat
+    name: app-db
