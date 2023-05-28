@@ -6,7 +6,7 @@ services:
   # Service item-app
   item-app:
     # Image dari service yang akan dibuat
-    image: item-app:v1
+    image: ghcr.io/bryanrizqiev/item-app:v1
     # Nama service yang akan dibuat
     container_name: item-app
     # Meneruskan port 80 host ke 8080 container
