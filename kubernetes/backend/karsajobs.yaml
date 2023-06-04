@@ -1,0 +1,34 @@
+apiVersion: apps/v1 # versi api yang digunakan
+kind: Deployment # bertipe Deployment
+metadata: # metadata yang didefinisikan
+  name: karsajobs # nama yang didefinisikan
+  namespace: karsa-jobs # namespace yang ditautkan
+spec: # spesifikasi yang didefinisikan
+  selector: # selector dari deployment
+    matchLabels: # menggunakan pencocokan label
+      name: karsajobs # selector pod dengan label -> name === karsajobs
+  template: # template pod yang digunakan
+    metadata: # metadata yang didefinisikan
+      labels: # label yang didefinisikan
+        name: karsajobs # label dengan key name dan value karsajobs
+    spec: # spesifikasi yang didefinisikan
+      containers: # container dalam pod yang didefinisikan
+      - name: karsajobs # nama container yang didefinisikan
+        image: ghcr.io/bryanrizqiev/karsajobs:latest # image dari container
+        ports: # mengekspos port yang didefinisikan
+        - containerPort: 8080 # port yang diekspos oleh container
+        env: # environtment variable pada container yang didefinisikan
+          - name: APP_PORT # key APP_PORT
+            value: "8080" # value "8080"
+          - name: MONGO_HOST # key MONGO_HOST
+            value: $(MONGODB_SERVICE_SERVICE_HOST) # value memanfaatkan fitur service discovery yang menyematkan alamat ip service di env
+          - name: MONGO_USER # key MONGO_USER
+            valueFrom: # value diambil dari yang didefinisikan
+              secretKeyRef: # value diambil dari secret 
+                name: mongodb-secret # secret dengan nama mongodb-secret
+                key: MONGO_ROOT_USERNAME # mengambil value di key MONGO_ROOT_USERNAME dari secret mongodb-secret
+          - name: MONGO_PASS # key MONGO_PAS
+            valueFrom: # value diambil dari yang didefinisikan
+              secretKeyRef: # value diambil dari secret 
+                name: mongodb-secret # secret dengan nama mongodb-secret
+                key: MONGO_ROOT_PASSWORD # mengambil value di key MONGO_ROOT_PASSWORD dari secret mongodb-secret

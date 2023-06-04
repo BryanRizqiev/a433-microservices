@@ -1,0 +1,46 @@
+apiVersion: apps/v1 # versi api yang digunakan
+kind: StatefulSet # bertipe StatefulSet
+metadata: # metadata yang didefinisikan
+  name: mongodb # nama yang didefinisikan
+  labels: # label yang didefinisikan
+    app: mongodb # label dengan key app dan value mongodb
+  namespace: karsa-jobs # namespace yang ditautkan
+spec: # spesifikasi yang didefinisikan
+  selector: # selector dari statefulSet
+    matchLabels: # menggunakan pencocokan labe
+      app: mongodb # selector pod dengan label -> app === mongodb
+  serviceName: mongodb-service # service yang akan digunakan
+  replicas: 1 # jumlah replica yang didefinisikan
+  minReadySeconds: 10 # jumlah detik minimum pod yang baru dibuat harus siap tanpa ada kontainer yang crash
+  template: # template pod yang digunakan
+    metadata: # metadata yang didefinisikan
+      labels: # label yang didefinisikan
+        app: mongodb # label dengan key app dan value mongodb 
+    spec: # spesifikasi yang didefinisikan
+      containers: # container dalam pod yang didefinisikan
+      - name: mongodb # nama container yang didefinisikan
+        image: mongo # image dari container
+        ports: # mengekspos port yang didefinisikan
+        - containerPort: 27017 # port yang diekspos oleh container
+        env: # environtment variable pada container yang didefinisikan
+          - name: MONGO_INITDB_ROOT_USERNAME_FILE # key MONGO_INITDB_ROOT_USERNAME_FILE
+            value: /etc/mongo-credentials/MONGO_ROOT_USERNAME # value di direktori /etc/mongo-credentials/MONGO_ROOT_USERNAME pada container
+          - name: MONGO_INITDB_ROOT_PASSWORD_FILE # key MONGO_INITDB_ROOT_PASSWORD_FILE
+            value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD # value di direktori /etc/mongo-credentials/MONGO_ROOT_PASSWORD pada container
+        volumeMounts: # mount volume yang didefinisikan
+          - name: pv-volume # nama mount volume yang didefinisikan
+            mountPath: /data/db # path mount volume pada container
+          - name: secret-volume # nama mount volume yang didefinisikan
+            mountPath: /etc/mongo-credentials # path mount volume pada container
+          - name: configmap-volume # nama mount volume yang didefinisikan
+            mountPath: /config # path mount volume pada container
+      volumes: # volume yang didefinisikan, nama volume sesuai dengan nama mount volume agar bida terkait
+      - name: pv-volume # nama volume 
+        persistentVolumeClaim: # membaca volume lewat pvc
+          claimName: mongodb-pv-claim # nama pvc yang ditautkan
+      - name: secret-volume # nama volume 
+        secret: # membaca secret
+          secretName: mongodb-secret # nama secret yang ditautkan
+      - name: configmap-volume # nama volume 
+        configMap: # membaca configMap
+          name: mongodb-configmap # nama configMap yang ditautkan

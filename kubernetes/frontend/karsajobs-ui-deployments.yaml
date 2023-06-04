@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # versi api yang digunakan
+kind: Deployment # bertipe Deployment
+metadata: # metadata yang didefinisikan
+  name: karsajobs-ui # nama yang didefinisikan
+  namespace: karsa-jobs # namespace yang ditautkan
+spec: # spesifikasi yang didefinisikan
+  selector: # selector dari deployment
+    matchLabels: # menggunakan pencocokan label
+      name: karsajobs-ui # selector pod dengan label -> name === karsajobs-ui 
+  template: # template pod yang digunakan
+    metadata: # metadata yang didefinisikan
+      labels: # label yang didefinisikan
+        name: karsajobs-ui # label dengan key name dan value karsajobs-ui 
+    spec: # spesifikasi yang didefinisikan
+      containers: # container dalam pod yang didefinisikan
+      - name: karsajobs-ui # nama container yang didefinisikan
+        image: ghcr.io/bryanrizqiev/karsajobs-ui:latest # image dari container
+        ports: # mengekspos port yang didefinisikan
+        - containerPort: 8080 # port yang diekspos oleh container

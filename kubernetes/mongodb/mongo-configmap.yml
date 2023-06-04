@@ -1,0 +1,10 @@
+apiVersion: v1 # versi api yang digunakan
+kind: ConfigMap # bertipe Secret
+metadata: # metadata yang didefinisikan
+  name: mongodb-configmap # nama yang didefinisikan
+  namespace: karsa-jobs # namespace yang ditautkan
+data: # data yang didefinisikan
+  mongo.conf: | # data berupa mongo.conf dan berisi data dibawah
+    storage: 
+      dbPath: /data/db
+  
