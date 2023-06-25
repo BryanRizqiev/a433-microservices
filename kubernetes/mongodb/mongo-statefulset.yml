@@ -7,7 +7,7 @@ metadata: # metadata yang didefinisikan
   namespace: karsa-jobs # namespace yang ditautkan
 spec: # spesifikasi yang didefinisikan
   selector: # selector dari statefulSet
-    matchLabels: # menggunakan pencocokan labe
+    matchLabels: # menggunakan pencocokan label
       app: mongodb # selector pod dengan label -> app === mongodb
   serviceName: mongodb-service # service yang akan digunakan
   replicas: 1 # jumlah replica yang didefinisikan

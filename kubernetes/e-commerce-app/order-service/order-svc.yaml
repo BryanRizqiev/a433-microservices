@@ -1,0 +1,12 @@
+apiVersion: v1 # versi api yang digunakan
+kind: Service # bertipe Service
+metadata: # metadata yang didefinisikan
+    name: order-service # name yang didefinisikan
+    namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+    selector: # selector dari service berdasarkan label
+        app: order # selector pod dengan label = app : order
+    ports: # menyediakan port yang didefinisikan
+        - name: http-request-order # nama port ini adalah "http-request-order", pastikan nama port selalu unik agar tidak error
+          port: 3000 # port yang disediakan service
+          targetPort: 3000 # port yang dituju kepada pod

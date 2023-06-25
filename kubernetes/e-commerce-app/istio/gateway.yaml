@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3 # versi api yang digunakan
+kind: Gateway # bertipe Gateway
+metadata: # metadata yang didefinisikan
+    name: e-commerce-service-gateway # name yang didefinisikan
+    namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+    selector: # selector dari gateway
+        istio: ingressgateway # gateway akan memilih pod yang memiliki label "istio=ingressgateway" yaitu milik namespace istio-system 
+    servers: # server yang didefinisikan untuk diterapkan pada gateway
+        - port: # port yang didefinisikan terkait dengan server
+              name: http-gateway # nama port adalah http-gateway
+              protocol: HTTP # protokol port adalah HTTP
+              number: 80 # port 80 akan digunakan
+          hosts: # host yang didefinisikan perihal izin untuk akses melalui gateway
+              - "*" # gateway akan menerima semua traffic

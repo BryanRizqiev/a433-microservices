@@ -1,0 +1,15 @@
+apiVersion: v1 # versi api yang digunakan
+kind: Service # bertipe Service
+metadata: # metadata yang didefinisikan
+  name: rabbitmq-service # name yang didefinisikan
+  namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+  selector: # selector dari service berdasarkan label
+    app: rabbitmq # selector pod dengan label = app : rabbitmq
+  ports: # menyediakan port yang didefinisikan
+  - name: tcp-rabbitmq # nama port ini adalah "tcp-rabbitmq , pastikan nama port selalu unik agar tidak error
+    port: 5672 # port yang disediakan service
+    targetPort: 5672 # port yang dituju kepada pod
+  - name: http-rabbitmq # nama port ini adalah "http-rabbitmq", pastikan nama port selalu unik agar tidak error
+    port: 15672 # port yang disediakan service
+    targetPort: 15672 # port yang dituju kepada pod

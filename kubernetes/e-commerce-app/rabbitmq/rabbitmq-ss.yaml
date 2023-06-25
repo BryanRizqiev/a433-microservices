@@ -1,0 +1,31 @@
+apiVersion: apps/v1 # versi api yang digunakan
+kind: StatefulSet # bertipe StatefulSet
+metadata: # metadata yang didefinisikan
+  name: rabbitmq # nama yang didefinisikan
+  labels: # label yang didefinisikan
+    app: rabbitmq-ss # label dengan key app dan value rabbitmq-ss
+  namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+  selector: # selector dari statefulSet
+    matchLabels: # menggunakan pencocokan label
+      app: rabbitmq # selector pod dengan label = app : rabbitmq
+  serviceName: rabbitmq-service # service yang akan digunakan
+  replicas: 1 # jumlah replica yang didefinisikan
+  template: # template pod yang digunakan
+    metadata: # metadata yang didefinisikan
+      labels: # label yang didefinisikan
+        app: rabbitmq # label dengan key app dan value rabbitmq 
+    spec: # spec yang didefinisikan
+      containers: # container dalam pod yang didefinisikan
+      - name: rabbitmq # nama container yang didefinisikan
+        image: rabbitmq:3.11-management # image dari container
+        ports: # mengekspos port yang didefinisikan
+        - containerPort: 5672 # port yang diekspos oleh container
+        - containerPort: 15672 # port yang diekspos oleh container
+        volumeMounts: # mount volume yang didefinisikan
+          - name: rabbitmq-volume # nama mount volume yang didefinisikan
+            mountPath: /var/lib/rabbitmq # path mount volume pada container
+      volumes: # volume yang didefinisikan, nama volume sesuai dengan nama mount volume agar bind terkait
+        - name: rabbitmq-volume # nama volume 
+          persistentVolumeClaim: # membaca volume lewat pvc
+            claimName: rabbitmq-pvc # nama pvc yang ditautkan

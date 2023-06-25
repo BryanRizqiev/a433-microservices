@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3 # versi api yang digunakan
+kind: VirtualService # bertipe VirtualService
+metadata: # metadata yang didefinisikan
+    name: order-virtual-service # name yang didefinisikan
+    namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+    hosts: # host yang didefinisikan perihal izin untuk akses melalui virtualService
+        - "*" # virtualService akan menerima semua traffic
+    gateways: # gateway yang didefinisikan untuk dikaitkan dengan virtualService
+        - e-commerce-service-gateway # virtualService akan dikaitkan dengan gateway bernama "e-commerce-service-gateway"
+    http: # mendefinisikan aturan pengalihan berdasarkan permintaan http
+        - match: # kondisi yang harus dipenuhi
+              - uri: # memfilter uri request
+                    exact: /order # aturan ini hanya akan diterapkan pada permintaan dengan uri sama dengan "/order"
+          route: # jika kondisi terpenuhi akan dialihkan ke tujuan
+              - destination: # target tujuan pengalihan lalu lintas
+                    host: order-service # akan dialihkan ke service "order-service"
+                    port: # port yang digunakan untuk mengakses service
+                        number: 3000 # port 3000 akan digunakan untuk mengakses service "order-service"

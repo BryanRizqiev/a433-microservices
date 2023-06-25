@@ -1,0 +1,25 @@
+apiVersion: apps/v1 # versi api yang digunakan
+kind: Deployment # bertipe Deployment
+metadata: # metadata yang didefinisikan
+    name: shipping # name yang didefinisikan
+    namespace: e-commerce-app # namespace yang ditautkan
+spec: # spec yang didefinisikan
+    selector: # selector dari deployment
+        matchLabels: # menggunakan pencocokan label
+            app: shipping # selector pod dengan label = app : shipping
+    template: # template pod yang didefinisikan
+        metadata: # metadata pod yang didefinisikan
+            labels: # label pod yang didefinisikan
+                app: shipping # label dengan key app dan value shipping
+        spec: # spec container yang digunakan
+            containers: # container dalam pod yang didefinisikan
+                - name: shipping-container # nama container yang didefinisikan
+                  image: ghcr.io/bryanrizqiev/shipping-service:latest # image dari container
+                  ports: # mengekspos port yang didefinisikan
+                      - containerPort: 3001 # port yang diekspos oleh container
+                  env: # environtment variable pada container yang didefinisikan
+                      - name: PORT # key PORT
+                        value: "3001" # value 3001 
+                      - name: AMQP_URL # key AMQP_URL
+                        value: "amqp://guest:guest@rabbitmq-service.e-commerce-app.svc.cluster.local:5672" # value tersebut merupakan url dari rabbitmq-service 
+                                                                                                           # dan merupakan implementasi fitur service discovery
